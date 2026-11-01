@@ -1,6 +1,14 @@
 # Course materials from the instructor (not ours to publish)
 specs/
 
+# Project 0: only the PDF goes in the repo
+proj0/*
+!proj0/project0_jiahznegli.pdf
+
+# Project 1: figures and LaTeX sources stay local; the repo gets proj1/proj1_report.pdf
+proj1/figures/
+proj1/report/
+
 # Data: download with proj1/code/00_download.sh, rebuild with proj1/code/02_prepare.py
 proj1/data/raw/
 proj1/data/processed/*.parquet

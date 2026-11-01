@@ -1,6 +1,6 @@
 #!/bin/bash
-# Download the raw data for Project 1. Run on a compute node, e.g.
-#   srun -p general -A jhf24001 -t 00:20:00 bash code/00_download.sh
+# Download the raw data for Project 1 into data/raw (about 130 MB):
+#   bash code/00_download.sh
 set -euo pipefail
 cd "$(dirname "$0")/../data/raw"
 

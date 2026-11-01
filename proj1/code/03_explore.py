@@ -174,7 +174,7 @@ out["fig1_n_four_reviewer_papers"] = int(len(four))
 
 VOTE_RAMP = {0: "#86b6ef", 1: "#5598e7", 2: "#2a78d6", 3: "#1c5cab", 4: "#0d366b"}
 panel_means = [4.5, 4.75, 5.0, 5.25, 5.5, 5.75, 6.0, 6.25, 6.5]
-fig, axes = plt.subplots(3, 3, figsize=(7.2, 6.9), sharex=True, sharey=True)
+fig, axes = plt.subplots(3, 3, figsize=(7.2, 6.3), sharex=True, sharey=True)
 for ax, m in zip(axes.flat, panel_means):
     s = cg[np.isclose(cg.stratum, m)].sort_values("sd").reset_index(drop=True)
     for i, r in s.iterrows():
@@ -194,10 +194,54 @@ fig.supxlabel("Spread of the four final ratings (standard deviation)", fontsize=
 fig.supylabel("Accepted (%)", fontsize=8.5, color=INK2)
 handles = [plt.Line2D([], [], marker="o", ls="", ms=6, color=c, mec="white", label=str(v))
            for v, c in VOTE_RAMP.items()]
+fig.suptitle("A  Accept or reject: acceptance rate at a fixed mean rating", x=0.01, ha="left",
+             fontsize=9.5, fontweight="bold", color=INK)
 fig.legend(handles=handles, title="Number of reviewers rating ≥ 6 (out of 4)",
-           title_fontsize=8, loc="upper center", ncol=5, bbox_to_anchor=(0.5, 1.0))
-fig.tight_layout(rect=(0, 0, 1, 0.93))
+           title_fontsize=8, loc="upper center", ncol=5, bbox_to_anchor=(0.5, 0.965))
+fig.tight_layout(rect=(0, 0, 1, 0.915))
 save(fig, "fig1_spread")
+
+# Figure 1B: presentation tier of accepted papers, by number of reviewers rating >= 8
+n8 = R.assign(h=R["r1"] >= 8).groupby("paper_id")["h"].sum()
+P["n8"] = P["paper_id"].map(n8).astype(int)
+accp = P[P.decision.isin(["poster", "spotlight", "oral"])].copy()
+accp["n8c"] = accp["n8"].clip(upper=4)
+tiers = ["poster", "spotlight", "oral"]
+tier = (accp.groupby("n8c")["decision"].value_counts(normalize=True).unstack(fill_value=0)
+            .reindex(columns=tiers, fill_value=0))
+tn = accp.groupby("n8c").size()
+out["accepted_train"] = accp["decision"].value_counts().to_dict()
+out["tier_by_n8"] = {str(int(k)): {"n": int(tn[k]), **{c: round(float(tier.loc[k, c]), 4) for c in tiers}}
+                     for k in tier.index}
+mb = pd.cut(accp["mean1"], [0, 6.5, 7.0, 7.5, 11], right=False)
+out["spot_or_oral_by_mean"] = (accp.assign(top=accp.decision.isin(["spotlight", "oral"]))
+                               .groupby(mb, observed=True)["top"].agg(["mean", "size"]).round(4)
+                               .rename(index=str).to_dict())
+
+# Ordered tiers -> one-hue ordinal ramp (orange, so it does not clash with the blue in panel A);
+# poster, the large majority, stays neutral.
+TIER_COL = {"poster": GRAY_FILL, "spotlight": "#eb6834", "oral": "#9a3412"}
+fig, ax = plt.subplots(figsize=(7.2, 2.7))
+fig.subplots_adjust(left=0.19, right=0.98, top=0.74, bottom=0.2)
+ypos = np.arange(len(tier))[::-1]
+left = np.zeros(len(tier))
+for c in tiers:
+    w = 100 * tier[c].to_numpy()
+    ax.barh(ypos, w, left=left, height=0.62, color=TIER_COL[c], edgecolor="white", linewidth=1.5,
+            label=c.capitalize())
+    if c != "poster":
+        for y, l0, wi in zip(ypos, left, w):
+            if wi >= 7:
+                ax.text(l0 + wi / 2, y, f"{wi:.0f}%", ha="center", va="center", color="white", fontsize=7.5)
+    left += w
+ax.set_yticks(ypos, [f"{'4 or more' if k == 4 else int(k)}  (n={tn[k]:,})" for k in tier.index])
+ax.set_xlim(0, 100)
+ax.set_xlabel("Share of accepted papers (%)")
+ax.grid(axis="y", visible=False)
+fig.suptitle("B  Poster, spotlight or oral: accepted papers by number of reviewers rating ≥ 8",
+             x=0.01, y=0.97, ha="left", fontsize=9.5, fontweight="bold", color=INK)
+fig.legend(*ax.get_legend_handles_labels(), loc="upper center", bbox_to_anchor=(0.58, 0.88), ncol=3)
+save(fig, "fig1_tier")
 
 # ---------- H2: raised scores ----------
 sub = P[P.traj != "mixed_or_lowered"]

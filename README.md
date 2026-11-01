@@ -8,8 +8,8 @@ beyond the mean rating. It uses public OpenReview-derived data for 11,672 submis
 
 | Folder | Content |
 |---|---|
-| `proj0/` | Project 0: proposal (LaTeX + PDF) and slides |
-| `proj1/` | Project 1: data exploration, figures, model design, hypotheses |
+| `proj0/` | Project 0: proposal (PDF) |
+| `proj1/` | Project 1: report (`proj1_report.pdf`) and code |
 
 ## Data
 
@@ -27,18 +27,16 @@ Raw and processed data files are not tracked. Small summaries used in the report
 
 ## Reproducing Project 1
 
-Runs on the UConn Storrs HPC through SLURM (adjust the account and paths for other machines).
-
-The report is in `proj1/report/proj1_report.pdf`.
+The report is `proj1/proj1_report.pdf`. The scripts below rebuild the data tables and the figures
+(written to `proj1/figures/`, which is not tracked).
 
 ```bash
-# Python environment, and Tectonic for the LaTeX report
-mamba create -n bml -c conda-forge python=3.12 pandas pyarrow matplotlib-base numpy scipy
-mamba create -n tex -c conda-forge tectonic
+# Python 3.10+ with these packages, e.g.
+pip install pandas pyarrow matplotlib numpy scipy
 
 cd proj1
-srun -p general -A <account> -t 00:20:00 bash code/00_download.sh              # raw data -> data/raw
-srun -p general -A <account> -c2 --mem=8G -t 00:30:00 bash code/run_all.sh     # tables, figures, report
+bash code/00_download.sh    # download the raw data into data/raw (about 130 MB)
+bash code/run_all.sh        # build the tables and figures
 ```
 
 | Script | What it does |
