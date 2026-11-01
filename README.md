@@ -1,9 +1,10 @@
-# How do area chairs turn reviews into decisions? (ICLR 2025)
+# Predicting ICLR 2025 peer-review decisions with Bayesian models
 
 Course project for CSE 5825 Bayesian Machine Learning (UConn), Jiazheng Li.
 
-The project studies how ICLR 2025 area chairs aggregate reviewer ratings into accept/reject
-and presentation-tier decisions, using public OpenReview-derived data for 11,672 submissions.
+The project asks whether the information in peer reviews predicts the decision on an ICLR 2025
+submission (reject, poster, spotlight, oral), and in particular whether reviews carry information
+beyond the mean rating. It uses public OpenReview-derived data for 11,672 submissions.
 
 | Folder | Content |
 |---|---|

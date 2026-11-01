@@ -10,21 +10,22 @@
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \usepackage{graphicx}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage[section]{placeins}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,fit}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue]{hyperref}
 \setlist{nosep,leftmargin=*}
 \graphicspath{{../figures/}}
 
-\title{How Do Area Chairs Turn Reviews into Decisions?\\[2pt]
-\large Exploring the ICLR 2025 Review Data}
-\author{CSE 5825 Bayesian Machine Learning --- Project Assignment 1 --- Jiazheng Li}
+\title{Predicting ICLR 2025 Peer-Review Decisions with Bayesian Models\\[2pt]
+\large Project Assignment 1: Exploring the Data and Thinking about Models}
+\author{CSE 5825 Bayesian Machine Learning --- Jiazheng Li}
 \date{November 2026}
 
 \begin{document}
 \maketitle
 
-\noindent In Project 0, I proposed to predict ICLR 2025 decisions from peer reviews. In this assignment, I narrow the question to one step of the process: \emph{how area chairs (ACs) turn the reviewers' ratings into a decision}. Each paper gets three to five reviews. Each reviewer gives an overall rating from $\{1,3,5,6,8,10\}$, where 5 means ``marginally below the acceptance threshold'' and 6 means ``marginally above''. The AC reads the reviews and the discussion and recommends accept or reject. The usual summary of a paper is its mean rating, but the AC is free to weigh the reviews in other ways. All code is at \url{https://github.com/lijiazheng0917/bml-project}.
+\noindent This project asks whether the information in peer reviews can predict the decision on an ICLR 2025 submission (reject, or accept as a poster, spotlight or oral), and in particular whether the reviews carry information \emph{beyond the mean rating} (Project 0). Each paper gets three to five reviews. Each reviewer picks an overall rating from only six options, $\{1,3,5,6,8,10\}$, where 5 means ``marginally below the acceptance threshold'' and 6 means ``marginally above''. An area chair (AC) then reads the reviews and the discussion and recommends a decision. In this assignment I explore the data with this question in mind and look at three kinds of information beyond the mean: how the ratings fall around the acceptance threshold, how ratings change during the rebuttal, and how confident the reviewers are. All code is at \url{https://github.com/lijiazheng0917/bml-project}.
 
 \section{Working with data}
 
@@ -70,7 +71,7 @@ Decided by an AC (reject 5,019; poster 3,115; spotlight 380; oral 213) & 8,727 \
 \label{tab:sample}
 \end{table}
 
-\paragraph{Why the data interest me.} Peer review decides which work gets attention, and many careers depend on it. Yet the last step, where an AC combines several reviews into one decision, is hidden. ICLR is one of the few venues where all reviews, ratings and decisions are public, and the ICLR Insights snapshots even show how each rating changed, so this step can be studied directly. As someone who submits to these conferences, I want to know what actually drives the decision.
+\paragraph{Why the data interest me.} Peer review decides which work gets attention, and many careers depend on it. Yet it is not clear how several reviews turn into one decision, or whether the mean rating, the number that authors and reviewers usually look at, tells the whole story. ICLR is one of the few venues where all reviews, ratings and decisions are public, and the ICLR Insights snapshots even show how each rating changed, so this step can be studied directly. As someone who submits to these conferences, I want to know what actually drives the decision.
 
 \paragraph{Possible biases.}
 \begin{enumerate}
@@ -85,7 +86,7 @@ Decided by an AC (reject 5,019; poster 3,115; spotlight 380; oral 213) & 8,727 \
 
 \subsection{Three visualizations}
 
-Each figure looks at one way in which ACs might combine ratings. The figures describe patterns in the training set; they are not tests.
+Each figure looks at one kind of information beyond the mean rating. The figures describe patterns in the training set; they are not tests.
 
 \begin{figure}[p]
 \centering
@@ -96,7 +97,7 @@ Each figure looks at one way in which ACs might combine ratings. The figures des
 
 \paragraph{Figure~\ref{fig:spread}: same mean, different ratings.}
 \emph{What it shows.} If ACs used only the mean rating, all dots in a panel would sit at the same height. They do not. Within each panel, the dots are ordered by colour, not by spread: the more reviewers give 6 or higher, the higher the acceptance rate. At a mean of 5.25, papers rated 3,6,6,6 were accepted 35\% of the time, but papers rated 5,5,5,6 only 3\%. At a mean of 6.0, papers rated 6,6,6,6 were accepted 91\% of the time, but 5,5,6,8 only 44\%.
-\emph{Why it is interesting.} A single low rating does not sink a paper: 3,6,6,6 does far better than 5,5,5,6, although it contains the lowest rating. This goes against my starting idea that one strong negative review works as a veto. It suggests that ACs count recommendations (accept side vs.\ reject side) instead of averaging numbers. The only hint in the other direction is at a mean of 6.25, where 3,6,8,8 (71\%) is below 5,6,6,8 (84\%), but the two intervals overlap.
+\emph{Why it is interesting.} A single low rating does not sink a paper: 3,6,6,6 does far better than 5,5,5,6, although it contains the lowest rating. This goes against my starting idea that one strong negative review works as a veto. It also refines the disagreement hypothesis of Project 0: at the same mean, the spread itself is not what matters; what matters is how many ratings fall on each side of the threshold. Decisions seem to follow the count of accept-side recommendations rather than the average of the numbers. The only hint in the other direction is at a mean of 6.25, where 3,6,8,8 (71\%) is below 5,6,6,8 (84\%), but the two intervals overlap.
 \emph{What it tells us about the data.} In practice the rating scale does not behave like evenly spaced numbers: the step from 5 to 6 seems to matter much more than its size of one point.
 
 \begin{figure}[t]
@@ -108,7 +109,7 @@ Each figure looks at one way in which ACs might combine ratings. The figures des
 
 \paragraph{Figure~\ref{fig:raised}: what the rebuttal changes.}
 \emph{What it shows.} Rebuttals move ratings almost only upward: 29.7\% of reviewers raised their rating, 1.5\% lowered it, and 68.8\% kept it (panel B). The most common change is 5$\to$6 (3,904 reviewers), which is exactly the move from ``below the threshold'' to ``above the threshold''. Next come 6$\to$8 (1,732) and 3$\to$5 (1,422). Reviewers who started at 5 changed most often (42\% raised). In panel A, the two curves lie on top of each other: at the same final mean, papers that got there through a rebuttal increase are accepted about as often as papers that had that mean from the start.
-\emph{Why it is interesting.} Panel A suggests that ACs mostly look at where the ratings ended, not how they got there. But Figure~\ref{fig:spread} says that ACs care about the \emph{number} of accept-side ratings, and panel B shows that rebuttals mostly create new accept-side ratings (5$\to$6). The figure cannot tell whether such a converted rating counts as much as one that was on the accept side from the start. To see that, we must also hold the number of accept-side ratings fixed, which needs the model in Section~\ref{sec:models}.
+\emph{Why it is interesting.} This is the rebuttal-trajectory question from Project 0. Panel A suggests that the decision mostly follows where the ratings ended, not how they got there. But Figure~\ref{fig:spread} shows that the \emph{number} of accept-side ratings matters, and panel B shows that rebuttals mostly create new accept-side ratings (5$\to$6). The figure cannot tell whether such a converted rating counts as much as one that was on the accept side from the start. To see that, we must also hold the number of accept-side ratings fixed, which needs the model in Section~\ref{sec:models}.
 
 \begin{figure}[t]
 \centering
@@ -119,7 +120,7 @@ Each figure looks at one way in which ACs might combine ratings. The figures des
 
 \paragraph{Figure~\ref{fig:confidence}: how confidence is used.}
 \emph{What it shows.} Panel A: a reviewer's confidence says little about how close the reviewer is to the other reviewers. The distance is smallest at confidence 3 (1.25 points) and largest at confidence 5 (1.45 points). If high confidence meant high accuracy, the line would go down; instead it is U-shaped. Panel B: when the confident reviewers are more negative than the others, papers are accepted about 3--4 percentage points less often than their mean predicts; when the confident reviewers are more positive (0.1 to 0.3), about 3 points more often. The 30 papers above 0.3 give no clear signal.
-\emph{Why it is interesting.} Together, the panels suggest that ACs listen more to confident reviewers, even though confidence does not mark the reviewers who agree with their peers. This would be a mismatch between how ACs use confidence and how informative it is. The effect is small and most papers sit in the middle bin, so it needs careful testing.
+\emph{Why it is interesting.} Together, the panels suggest that decisions lean toward the opinion of confident reviewers, even though confidence does not mark the reviewers who agree with their peers. This would be a mismatch between how confidence is used and how informative it is. The effect is small and most papers sit in the middle bin, so it needs careful testing.
 
 \section{Thinking about models}
 \label{sec:models}
@@ -178,52 +179,52 @@ Several important quantities are not observed. Figure~\ref{fig:model} shows how 
 \begin{figure}[t]
 \centering
 \input{fig_model.tex}
-\caption{Graphical model. Grey circles are observed, white circles are hidden, and the square box holds the shared parameters of the AC rule. Rounded rectangles are plates (repeated for each reviewer, paper and area). Dashed purple arrows are the links that the three hypotheses are about.}
+\caption{Graphical model. Grey circles are observed, white circles are hidden, and the square box holds the shared parameters of the decision model. Rounded rectangles are plates (repeated for each reviewer, paper and area). Dashed purple arrows are the links that the three hypotheses are about.}
 \label{fig:model}
 \end{figure}
 
-\paragraph{The AC's rule.} On top of these, I model the decision as
+\paragraph{The decision model.} This is the likelihood $p(Y_i\mid \mathbf x_i,\theta)$ from Project 0, now built from the individual ratings instead of their mean and standard deviation:
 \[
 \Pr(Y_i=\text{accept}) = \operatorname{logistic}\bigl(S_i - t_{a(i)}\bigr),\qquad
 S_i=\sum_{j} w_{ij}\Bigl[(1-\delta)\,v\bigl(r^{(1)}_{ij}\bigr)+\delta\, v\bigl(r^{(0)}_{ij}\bigr)\Bigr],\qquad
 w_{ij}\propto e^{\gamma\, c^{(1)}_{ij}},
 \]
-where the weights $w_{ij}$ of a paper sum to one and the logistic noise is the AC's private information $\eta_i$. Three shared parameters describe the AC:
-$v(k)$ is the value the AC gives to a rating of $k$ (one free number per rating level);
+where the weights $w_{ij}$ of a paper sum to one and the logistic noise is the AC's private information $\eta_i$. Three shared parameters describe how the ratings are combined:
+$v(k)$ is the value given to a rating of $k$ (one free number per rating level);
 $\delta$ is the weight on the \emph{initial} ratings;
-$\gamma$ says how much more the AC listens to confident reviewers.
-If $v(k)$ is a straight line in $k$, $\delta=0$ and $\gamma=0$, the rule is simply ``use the mean final rating''. Spotlight and oral can be added later as higher thresholds on the same score.
+$\gamma$ says how much more confident reviewers count.
+If $v(k)$ is a straight line in $k$, $\delta=0$ and $\gamma=0$, the model is simply ``use the mean final rating'', which is the baseline of Project 0. Spotlight and oral are added as higher thresholds on the same score, which gives the four decision classes of Project 0.
 
-To ask whether the AC's rule is \emph{reasonable}, I also fit a measurement model to the initial ratings: $u^{(0)}_{ij}=q_i+\varepsilon_{ij}$ with $\varepsilon_{ij}\sim\mathcal N(0,\sigma^2(c_{ij}))$, and $r^{(0)}_{ij}$ is $u^{(0)}_{ij}$ cut into bins. Because initial ratings are independent given $q_i$, their agreement tells us how much each rating level and each confidence level says about quality. From this we can work out how an \emph{ideal AC} --- one that ranks papers by their expected quality given all ratings --- would weigh the ratings, and compare it with the fitted $v$, $\delta$ and $\gamma$.
+To ask whether this way of combining ratings is \emph{reasonable}, I also fit a measurement model to the initial ratings: $u^{(0)}_{ij}=q_i+\varepsilon_{ij}$ with $\varepsilon_{ij}\sim\mathcal N(0,\sigma^2(c_{ij}))$, and $r^{(0)}_{ij}$ is $u^{(0)}_{ij}$ cut into bins. Because initial ratings are independent given $q_i$, their agreement tells us how much each rating level and each confidence level says about quality. From this we can work out how an \emph{ideal AC} --- one that ranks papers by their expected quality given all ratings --- would weigh the ratings, and compare it with the fitted $v$, $\delta$ and $\gamma$.
 
 \subsection{Hypotheses}
 \label{sec:hyp}
 
-Each hypothesis has two parts: (a) a \textbf{pattern} that should also appear in the held-out test set, and (b) a \textbf{deeper question}: does the AC behave like the ideal AC above? Part (b) cannot be read off a figure; it needs the hidden-variable model.
+The three hypotheses update those of Project 0 using what the figures show: H1 refines the disagreement hypothesis, H2 refines the rebuttal-trajectory hypothesis, and H3 replaces the discussion hypothesis, which cannot be tested because the reply counts in the data are all zero (Project 0). Each hypothesis has two parts: (a) a \textbf{pattern} that should also appear in the held-out test set, and (b) a \textbf{deeper question}: are the ratings combined the way the ideal AC above would combine them? Part (b) cannot be read off a figure; it needs the hidden-variable model.
 
-\paragraph{H1: ACs count votes.}
+\paragraph{H1: accept-side ratings matter beyond the mean.}
 (a) At the same final mean rating, the chance of acceptance rises with the number of reviewers who rate the paper 6 or higher; a single low rating ($\le 3$) does not work as a veto.
-(b) In the AC rule, the gap $v(6)-v(5)$ is larger than the gaps $v(5)-v(3)$ and $v(8)-v(6)$, and larger than an ideal AC would use. In plain words: ACs treat a rating mainly as an accept/reject recommendation.
+(b) In the decision model, the gap $v(6)-v(5)$ is larger than the gaps $v(5)-v(3)$ and $v(8)-v(6)$, and larger than an ideal AC would use. In plain words: a rating works mainly as an accept/reject vote.
 \emph{Why I expect it:} Figure~\ref{fig:spread}, and the rating labels themselves (``marginally below/above the threshold'') read like votes.
 \emph{What would count against it:} adding the vote count, or free values $v(k)$, does not improve predictions on the test set; or the fitted $v(k)$ lie close to a straight line.
 
-\paragraph{H2: converted votes count less.}
+\paragraph{H2: rebuttal trajectory --- converted votes count less.}
 (a) Among papers with the same final mean and the same number of accept-side ratings, papers in which a reviewer moved from below 6 to 6 or higher during the rebuttal are accepted less often than papers whose accept-side ratings were there from the start.
-(b) $\delta>0$: the AC keeps some weight on the initial ratings. An ideal AC should do this, because initial ratings are independent opinions, while final ratings partly reflect reviewers moving toward each other (ICC 0.15 $\to$ 0.33).
+(b) $\delta>0$: the decision keeps some weight on the initial ratings. An ideal AC should do this, because initial ratings are independent opinions, while final ratings partly reflect reviewers moving toward each other (ICC 0.15 $\to$ 0.33).
 \emph{Why I expect it:} 5$\to$6 is the most common change (Figure~\ref{fig:raised}B), and ACs can see the rating history and the discussion.
 \emph{What would count against it:} $\delta$ close to 0 (ACs use only the final ratings, as Figure~\ref{fig:raised}A suggests at the level of the mean), or $\delta<0$ (ACs reward a successful rebuttal).
 
-\paragraph{H3: confidence gets too much weight.}
+\paragraph{H3: reviewer confidence gets too much weight.}
 (a) At the same final mean and number of accept-side ratings, papers whose confident reviewers are more positive than their less confident reviewers are accepted more often ($\gamma>0$).
-(b) In the measurement model, a reviewer's noise $\sigma(c)$ hardly shrinks with confidence, so the AC's weight on confidence is larger than an ideal AC would use.
+(b) In the measurement model, a reviewer's noise $\sigma(c)$ hardly shrinks with confidence, so the weight on confidence is larger than an ideal AC would use.
 \emph{Why I expect it:} Figure~\ref{fig:confidence}B for part (a) and Figure~\ref{fig:confidence}A for part (b).
 \emph{What would count against it:} $\gamma$ close to 0; or $\sigma(c)$ clearly shrinks with confidence, in which case listening to confident reviewers is reasonable.
 
 \paragraph{How I will test them (Projects 2--3).}
 \begin{enumerate}
 \item The hypotheses and the analysis plan are fixed now, before anyone looks at the test set.
-\item Fit the AC rule and the measurement model with MCMC on the training set, and report posterior intervals for $v(k)$, $\delta$, $\gamma$ and $\sigma(c)$.
-\item Compare versions of the AC rule (mean only; mean plus vote count; free $v(k)$; with and without $\delta$ and $\gamma$) by their log-likelihood on the 20\% test set.
+\item Fit the decision model and the measurement model with MCMC on the training set, and report posterior intervals for $v(k)$, $\delta$, $\gamma$ and $\sigma(c)$.
+\item Compare versions of the decision model (mean only, as in the Project 0 baseline; mean plus vote count; free $v(k)$; with and without $\delta$ and $\gamma$) by their log-likelihood on the 20\% test set.
 \item Posterior predictive check: simulate decisions from the fitted model and check that they reproduce Figure~\ref{fig:spread}.
 \item Repeat the analysis on ICLR 2024, which ICLR Insights also covers with the same rating scale.
 \item Check sensitivity: use only reviewers with a tracing score of 1 or less, and treat the rejected-then-withdrawn papers differently.
