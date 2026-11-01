@@ -28,9 +28,12 @@ Raw and processed data files are not tracked. Small summaries used in the report
 
 Runs on the UConn Storrs HPC through SLURM (adjust the account and paths for other machines).
 
+The report is in `proj1/report/proj1_report.pdf`.
+
 ```bash
-# Python environment
+# Python environment, and Tectonic for the LaTeX report
 mamba create -n bml -c conda-forge python=3.12 pandas pyarrow matplotlib-base numpy scipy
+mamba create -n tex -c conda-forge tectonic
 
 cd proj1
 srun -p general -A <account> -t 00:20:00 bash code/00_download.sh              # raw data -> data/raw
