@@ -1,0 +1,24 @@
+# Course materials from the instructor (not ours to publish)
+specs/
+
+# Data: download with proj1/code/00_download.sh, rebuild with proj1/code/02_prepare.py
+proj1/data/raw/
+proj1/data/processed/*.parquet
+proj1/data/processed/*_log.txt
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+latex_log.txt
+
+# OS / Python
+.DS_Store
+__pycache__/
+*.pyc

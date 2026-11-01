@@ -1,0 +1,53 @@
+% Graphical model for Section 2.2 (included by proj1_report.tex)
+\begin{tikzpicture}[
+  >=Latex,
+  latent/.style={circle,draw=black!70,minimum size=10mm,inner sep=0pt,font=\small},
+  obs/.style={latent,fill=black!12},
+  param/.style={rectangle,draw=black!70,fill=white,minimum size=7mm,inner sep=2pt,font=\small},
+  arr/.style={->,semithick,draw=black!70},
+  test/.style={->,thick,draw=violet!80!black,dashed},
+  hyp/.style={font=\scriptsize\bfseries,text=violet!80!black,fill=white,inner sep=1pt},
+  platebox/.style={draw=black!45,rounded corners=3pt,inner sep=7pt},
+  platelabel/.style={font=\scriptsize,text=black!60,anchor=south east,inner sep=2pt}
+]
+  % reviewer-level
+  \node[latent] (tau) at (0,0)      {$\tau_{ij}$};
+  \node[obs]    (c)   at (0,-1.6)   {$c_{ij}$};
+  \node[latent] (u0)  at (1.8,0)    {$u^{(0)}_{ij}$};
+  \node[obs]    (r0)  at (1.8,-1.6) {$r^{(0)}_{ij}$};
+  \node[latent] (u1)  at (3.6,0)    {$u^{(1)}_{ij}$};
+  \node[obs]    (r1)  at (3.6,-1.6) {$r^{(1)}_{ij}$};
+  \node[platebox, fit=(tau)(c)(u0)(r0)(u1)(r1)] (pj) {};
+  \node[platelabel] at (pj.south east) {$j=1,\dots,J_i$};
+
+  % paper-level
+  \node[latent] (q)   at (1.8,1.9)  {$q_i$};
+  \node[latent] (rho) at (3.6,1.9)  {$\rho_i$};
+  \node[latent] (eta) at (6.4,1.9)  {$\eta_i$};
+  \node[obs]    (y)   at (6.4,-0.8) {$Y_i$};
+  \node[platebox, fit=(pj)(q)(rho)(eta)(y), inner sep=9pt] (pi) {};
+  \node[platelabel] at (pi.south east) {$i=1,\dots,N$};
+
+  % global and area-level
+  \node[latent] (t)   at (8.9,-0.8) {$t_a$};
+  \node[platebox, fit=(t)] (pa) {};
+  \node[platelabel] at (pa.south east) {$a=1,\dots,A$};
+  \node[param]  (ac)  at (8.9,1.9)  {$\kappa,\gamma,\delta$};
+
+  % edges
+  \draw[arr] (tau) -- (c);
+  \draw[arr] (tau) -- (u0);
+  \draw[arr] (q) -- (u0);
+  \draw[arr] (u0) -- (r0);
+  \draw[arr] (u0) -- (u1);
+  \draw[arr] (rho) -- (u1);
+  \draw[arr] (u1) -- (r1);
+  \draw[arr] (eta) -- (y);
+  \draw[arr] (t) -- (y);
+  \draw[arr] (ac) -- (y);
+
+  % edges whose form or existence the hypotheses test
+  \draw[test] (r1.east) -- node[hyp,pos=0.45] {H1} (y.west);
+  \draw[test] (r0.south) .. controls (2.6,-2.9) and (5.4,-2.6) .. node[hyp,pos=0.55] {H2} (y.south west);
+  \draw[test] (c.south) .. controls (1.0,-3.6) and (6.2,-3.4) .. node[hyp,pos=0.6] {H3} (y.south);
+\end{tikzpicture}

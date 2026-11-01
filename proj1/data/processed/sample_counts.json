@@ -1,0 +1,129 @@
+{
+ "reviewertoo_papers": 11672,
+ "papercopilot_rows": 11677,
+ "papercopilot_duplicate_rows": [
+  [
+   "cnLNpIRPuF",
+   "Withdraw"
+  ],
+  [
+   "cnLNpIRPuF",
+   "Withdraw"
+  ],
+  [
+   "tk3NsE5ugS",
+   "Withdraw"
+  ],
+  [
+   "tk3NsE5ugS",
+   "Withdraw"
+  ],
+  [
+   "tk3NsE5ugS",
+   "Withdraw"
+  ],
+  [
+   "xwcCFxIEEL",
+   "Withdraw"
+  ],
+  [
+   "xwcCFxIEEL",
+   "Withdraw"
+  ],
+  [
+   "xwcCFxIEEL",
+   "Withdraw"
+  ]
+ ],
+ "papercopilot_papers": 11672,
+ "union_papers": 11672,
+ "insights_entries": 11677,
+ "insights_papers": 11672,
+ "withdrawn_after_accept": 5,
+ "withdrawn_after_reject": 109,
+ "insights_papers_with_reviews": 11430,
+ "insights_reviews": 46353,
+ "decision_all": {
+  "reject": 5019,
+  "poster": 3115,
+  "withdrawn": 2874,
+  "spotlight": 380,
+  "oral": 213,
+  "desk_reject": 70,
+  "label_conflict": 1
+ },
+ "status_pc_raw": {
+  "Reject": 4911,
+  "Poster": 3110,
+  "Withdraw": 2988,
+  "Spotlight": 380,
+  "Oral": 213,
+  "Desk Reject": 70
+ },
+ "label_disagreements": 1,
+ "label_disagreement_table": {
+  "desk_reject": {
+   "desk_reject": 70,
+   "oral": 0,
+   "poster": 0,
+   "reject": 0,
+   "spotlight": 0
+  },
+  "oral": {
+   "desk_reject": 0,
+   "oral": 213,
+   "poster": 0,
+   "reject": 0,
+   "spotlight": 0
+  },
+  "poster": {
+   "desk_reject": 0,
+   "oral": 0,
+   "poster": 3110,
+   "reject": 0,
+   "spotlight": 0
+  },
+  "reject": {
+   "desk_reject": 1,
+   "oral": 0,
+   "poster": 0,
+   "reject": 4910,
+   "spotlight": 0
+  },
+  "spotlight": {
+   "desk_reject": 0,
+   "oral": 0,
+   "poster": 0,
+   "reject": 0,
+   "spotlight": 380
+  },
+  "withdrawn": {
+   "desk_reject": 0,
+   "oral": 0,
+   "poster": 5,
+   "reject": 2983,
+   "spotlight": 0
+  }
+ },
+ "withdrawn_with_metareview": 0,
+ "reject_without_metareview": 0,
+ "decided_in_insights": {
+  "true": 8655,
+  "false": 72
+ },
+ "analysis_by_split_decision": {
+  "test": {
+   "oral": 42,
+   "poster": 617,
+   "reject": 995,
+   "spotlight": 76
+  },
+  "train": {
+   "oral": 170,
+   "poster": 2470,
+   "reject": 3982,
+   "spotlight": 303
+  }
+ },
+ "tracing_ge2_analysis": 1379
+}
