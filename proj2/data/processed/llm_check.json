@@ -1,0 +1,84 @@
+{
+ "reviews_with_text": 51199,
+ "coded": 51192,
+ "cost_usd": 21.359939803476003,
+ "median_latency_s": 2.2314831018447876,
+ "2024": {
+  "n": 18736,
+  "rho_sentiment_initial": 0.73,
+  "rho_sentiment_final": 0.672,
+  "rho_specificity_conf": 0.181,
+  "concern_type_share": {
+   "experiments": 0.401,
+   "novelty": 0.222,
+   "clarity": 0.127,
+   "significance_scope": 0.119,
+   "theory_correctness": 0.103,
+   "other": 0.027
+  },
+  "fixable_share": 0.623,
+  "update_any_raised": 0.143,
+  "update_any_same": 0.019,
+  "sentiment_mean_by_initial_rating": {
+   "1.0": 2.72,
+   "3.0": 3.92,
+   "5.0": 4.86,
+   "6.0": 6.04,
+   "8.0": 7.07,
+   "10.0": 7.94
+  },
+  "sentiment_sd_by_initial_rating": {
+   "1.0": 1.17,
+   "3.0": 1.02,
+   "5.0": 1.0,
+   "6.0": 1.03,
+   "8.0": 1.0,
+   "10.0": 0.9
+  }
+ },
+ "2025": {
+  "n": 32456,
+  "rho_sentiment_initial": 0.7,
+  "rho_sentiment_final": 0.626,
+  "rho_specificity_conf": 0.18,
+  "concern_type_share": {
+   "experiments": 0.441,
+   "novelty": 0.215,
+   "significance_scope": 0.119,
+   "clarity": 0.109,
+   "theory_correctness": 0.087,
+   "other": 0.03
+  },
+  "fixable_share": 0.629,
+  "update_any_raised": 0.062,
+  "update_any_same": 0.009,
+  "sentiment_mean_by_initial_rating": {
+   "1.0": 2.78,
+   "3.0": 4.0,
+   "5.0": 4.87,
+   "6.0": 5.96,
+   "8.0": 6.95,
+   "10.0": 7.77
+  },
+  "sentiment_sd_by_initial_rating": {
+   "1.0": 1.18,
+   "3.0": 0.95,
+   "5.0": 0.96,
+   "6.0": 1.04,
+   "8.0": 0.99,
+   "10.0": 1.1
+  }
+ },
+ "raise_rate_by_fixable_given_r0": {
+  "false": {
+   "3.0": 0.254,
+   "5.0": 0.333,
+   "6.0": 0.165
+  },
+  "true": {
+   "3.0": 0.323,
+   "5.0": 0.411,
+   "6.0": 0.213
+  }
+ }
+}

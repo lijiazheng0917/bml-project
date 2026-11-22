@@ -1,0 +1,36 @@
+{
+ "main_track": 19814,
+ "reviews": 75858,
+ "reviews_with_text": 70693,
+ "decisions": {
+  "reject": 8816,
+  "poster": 5133,
+  "withdrawn": 4733,
+  "desk_reject": 908,
+  "oral": 223,
+  "label_conflict": 1
+ },
+ "label_conflicts": 1,
+ "analysis_by_split_decision": {
+  "test": {
+   "oral": 45,
+   "poster": 1027,
+   "reject": 1763
+  },
+  "train": {
+   "oral": 178,
+   "poster": 4106,
+   "reject": 7053
+  }
+ },
+ "analysis_reviews": 55238,
+ "analysis_reviews_with_text": 51490,
+ "rating_values": {
+  "0.0": 671,
+  "2.0": 11343,
+  "4.0": 21382,
+  "6.0": 17050,
+  "8.0": 4610,
+  "10.0": 182
+ }
+}

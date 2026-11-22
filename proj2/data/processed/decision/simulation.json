@@ -1,0 +1,179 @@
+{
+ "data_like": {
+  "accept_rate_simulated": 0.4105003523608175,
+  "gamma": {
+   "true": 0.09,
+   "mean": 0.095,
+   "lo": 0.056,
+   "hi": 0.134,
+   "covered": true
+  },
+  "delta": {
+   "true": -0.03,
+   "mean": -0.046,
+   "lo": -0.09,
+   "hi": -0.004,
+   "covered": true
+  },
+  "sigma_a": {
+   "true": 0.15,
+   "mean": 0.135,
+   "lo": 0.022,
+   "hi": 0.244,
+   "covered": true
+  },
+  "v(1)": {
+   "true": -4.5,
+   "mean": -3.484,
+   "lo": -5.474,
+   "hi": -1.699,
+   "covered": true
+  },
+  "v(3)": {
+   "true": -3.8,
+   "mean": -3.479,
+   "lo": -3.963,
+   "hi": -3.009,
+   "covered": true
+  },
+  "v(6)": {
+   "true": 6.5,
+   "mean": 6.574,
+   "lo": 6.222,
+   "hi": 6.924,
+   "covered": true
+  },
+  "v(8)": {
+   "true": 11.5,
+   "mean": 11.451,
+   "lo": 10.933,
+   "hi": 11.957,
+   "covered": true
+  },
+  "v(10)": {
+   "true": 11.2,
+   "mean": 9.811,
+   "lo": 7.983,
+   "hi": 11.624,
+   "covered": true
+  }
+ },
+ "h2_true": {
+  "accept_rate_simulated": 0.3524489076814658,
+  "gamma": {
+   "true": 0.0,
+   "mean": 0.034,
+   "lo": -0.008,
+   "hi": 0.076,
+   "covered": true
+  },
+  "delta": {
+   "true": 0.3,
+   "mean": 0.288,
+   "lo": 0.254,
+   "hi": 0.319,
+   "covered": true
+  },
+  "sigma_a": {
+   "true": 0.15,
+   "mean": 0.139,
+   "lo": 0.042,
+   "hi": 0.239,
+   "covered": true
+  },
+  "v(1)": {
+   "true": -4.5,
+   "mean": -3.494,
+   "lo": -5.658,
+   "hi": -1.464,
+   "covered": true
+  },
+  "v(3)": {
+   "true": -3.8,
+   "mean": -3.281,
+   "lo": -3.801,
+   "hi": -2.763,
+   "covered": true
+  },
+  "v(6)": {
+   "true": 6.5,
+   "mean": 6.609,
+   "lo": 6.254,
+   "hi": 6.965,
+   "covered": true
+  },
+  "v(8)": {
+   "true": 11.5,
+   "mean": 11.224,
+   "lo": 10.747,
+   "hi": 11.694,
+   "covered": true
+  },
+  "v(10)": {
+   "true": 11.2,
+   "mean": 9.996,
+   "lo": 8.284,
+   "hi": 11.74,
+   "covered": true
+  }
+ },
+ "h3_linear": {
+  "accept_rate_simulated": 0.0507399577167019,
+  "gamma": {
+   "true": 0.5,
+   "mean": 0.431,
+   "lo": 0.281,
+   "hi": 0.585,
+   "covered": true
+  },
+  "delta": {
+   "true": 0.0,
+   "mean": -0.029,
+   "lo": -0.135,
+   "hi": 0.073,
+   "covered": true
+  },
+  "sigma_a": {
+   "true": 0.3,
+   "mean": 0.232,
+   "lo": 0.085,
+   "hi": 0.401,
+   "covered": true
+  },
+  "v(1)": {
+   "true": -6.0,
+   "mean": -4.652,
+   "lo": -9.125,
+   "hi": -0.925,
+   "covered": true
+  },
+  "v(3)": {
+   "true": -3.0,
+   "mean": -2.772,
+   "lo": -3.869,
+   "hi": -1.663,
+   "covered": true
+  },
+  "v(6)": {
+   "true": 1.5,
+   "mean": 1.772,
+   "lo": 1.258,
+   "hi": 2.31,
+   "covered": true
+  },
+  "v(8)": {
+   "true": 4.5,
+   "mean": 4.819,
+   "lo": 4.33,
+   "hi": 5.353,
+   "covered": true
+  },
+  "v(10)": {
+   "true": 7.5,
+   "mean": 7.374,
+   "lo": 6.231,
+   "hi": 8.621,
+   "covered": true
+  }
+ }
+}

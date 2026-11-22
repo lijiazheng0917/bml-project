@@ -1,0 +1,110 @@
+{
+ "2024": {
+  "reviews": 18736,
+  "median_words": 377.0,
+  "markers_per_1000_words_mean": 1.175,
+  "share_with_any_marker": 0.313,
+  "share_index_above_2": 0.237,
+  "per_10k_words_commendable": 0.327,
+  "per_10k_words_meticulous": 0.181,
+  "per_10k_words_delve": 0.465,
+  "per_10k_words_notably": 0.649,
+  "per_10k_words_showcase": 0.773,
+  "per_10k_words_underscore": 0.277,
+  "per_10k_words_intricate": 0.266,
+  "per_10k_words_pivotal": 0.191,
+  "rho_sent_rating_all": 0.73,
+  "by_index": {
+   "none": {
+    "n": 12878,
+    "rho_sent_rating": 0.724,
+    "mean_sentiment": 5.18,
+    "mean_rating": 5.09
+   },
+   "low (0-2]": {
+    "n": 1410,
+    "rho_sent_rating": 0.738,
+    "mean_sentiment": 4.84,
+    "mean_rating": 4.76
+   },
+   "high (>2)": {
+    "n": 4448,
+    "rho_sent_rating": 0.74,
+    "mean_sentiment": 5.25,
+    "mean_rating": 5.07
+   }
+  }
+ },
+ "2025": {
+  "reviews": 32463,
+  "median_words": 393.0,
+  "markers_per_1000_words_mean": 1.254,
+  "share_with_any_marker": 0.368,
+  "share_index_above_2": 0.277,
+  "per_10k_words_commendable": 0.176,
+  "per_10k_words_meticulous": 0.089,
+  "per_10k_words_delve": 0.126,
+  "per_10k_words_notably": 0.544,
+  "per_10k_words_showcase": 0.6,
+  "per_10k_words_underscore": 0.184,
+  "per_10k_words_intricate": 0.154,
+  "per_10k_words_pivotal": 0.029,
+  "rho_sent_rating_all": 0.7,
+  "by_index": {
+   "none": {
+    "n": 20521,
+    "rho_sent_rating": 0.702,
+    "mean_sentiment": 5.15,
+    "mean_rating": 5.06
+   },
+   "low (0-2]": {
+    "n": 2931,
+    "rho_sent_rating": 0.691,
+    "mean_sentiment": 4.81,
+    "mean_rating": 4.71
+   },
+   "high (>2)": {
+    "n": 9004,
+    "rho_sent_rating": 0.694,
+    "mean_sentiment": 5.16,
+    "mean_rating": 4.99
+   }
+  }
+ },
+ "2026": {
+  "reviews": 51490,
+  "median_words": 401.0,
+  "markers_per_1000_words_mean": 0.753,
+  "share_with_any_marker": 0.264,
+  "share_index_above_2": 0.176,
+  "per_10k_words_commendable": 0.176,
+  "per_10k_words_meticulous": 0.074,
+  "per_10k_words_delve": 0.049,
+  "per_10k_words_notably": 0.567,
+  "per_10k_words_showcase": 0.263,
+  "per_10k_words_underscore": 0.069,
+  "per_10k_words_intricate": 0.063,
+  "per_10k_words_pivotal": 0.026,
+  "rho_sent_rating_all": 0.678,
+  "by_index": {
+   "none": {
+    "n": 37912,
+    "rho_sent_rating": 0.669,
+    "mean_sentiment": 5.15,
+    "mean_rating": 4.52
+   },
+   "low (0-2]": {
+    "n": 4515,
+    "rho_sent_rating": 0.68,
+    "mean_sentiment": 4.9,
+    "mean_rating": 4.23
+   },
+   "high (>2)": {
+    "n": 9057,
+    "rho_sent_rating": 0.708,
+    "mean_sentiment": 5.19,
+    "mean_rating": 4.53
+   }
+  }
+ }
+}

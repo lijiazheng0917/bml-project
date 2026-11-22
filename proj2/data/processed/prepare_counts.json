@@ -1,0 +1,63 @@
+{
+ "2024_insights_reviews": 26878,
+ "2024_insights_reviews_matched_to_pc": 26878,
+ "2024_final_rating_agrees_with_pc": 1.0,
+ "2024_reviews_with_text": 23601,
+ "2024_decisions": {
+  "reject": 3519,
+  "poster": 1808,
+  "withdrawn": 1571,
+  "spotlight": 367,
+  "oral": 86,
+  "desk_reject": 53
+ },
+ "2024_label_conflicts": 0,
+ "2024_analysis_by_split_decision": {
+  "test": {
+   "oral": 16,
+   "poster": 348,
+   "reject": 672,
+   "spotlight": 71
+  },
+  "train": {
+   "oral": 66,
+   "poster": 1392,
+   "reject": 2687,
+   "spotlight": 282
+  }
+ },
+ "2024_analysis_reviews": 21378,
+ "2024_analysis_reviews_with_text": 18736,
+ "2024_analysis_papers_all_text": 4280,
+ "2025_insights_reviews": 46353,
+ "2025_insights_reviews_matched_to_pc": 46353,
+ "2025_final_rating_agrees_with_pc": 1.0,
+ "2025_reviews_with_text": 43007,
+ "2025_decisions": {
+  "reject": 5019,
+  "poster": 3115,
+  "withdrawn": 2875,
+  "spotlight": 380,
+  "oral": 213,
+  "desk_reject": 70
+ },
+ "2025_label_conflicts": 0,
+ "2025_decision_differs_from_proj1": 1,
+ "2025_analysis_by_split_decision": {
+  "test": {
+   "oral": 42,
+   "poster": 617,
+   "reject": 995,
+   "spotlight": 76
+  },
+  "train": {
+   "oral": 170,
+   "poster": 2470,
+   "reject": 3982,
+   "spotlight": 303
+  }
+ },
+ "2025_analysis_reviews": 35036,
+ "2025_analysis_reviews_with_text": 32463,
+ "2025_analysis_papers_all_text": 7434
+}

@@ -30,3 +30,16 @@ latex_log.txt
 .DS_Store
 __pycache__/
 *.pyc
+
+# Project 2: same rules as Project 1
+proj2/figures/
+proj2/report/
+proj2/data/raw/
+proj2/data/processed/*.parquet
+proj2/data/processed/*_log.txt
+proj2/data/processed/**/*.parquet
+proj2/data/processed/*.jsonl
+proj2/data/processed/**/*.npz
+proj2/data/processed/**/*.log
+proj2/data/processed/**/log_*.txt
+proj2/data/processed/**/summary*.txt
